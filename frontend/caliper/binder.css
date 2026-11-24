@@ -13,4 +13,7 @@
 .card-table small,.jigs small{display:block;}
 .jigs{margin:1rem 0 0;}
 .jigs p{padding:.55rem 0;border-bottom:1px dotted var(--s-line);}
+.history{margin-top:1.2rem;max-width:none;}
+.history table{font-size:.92rem;}
+textarea{min-height:5.2rem;resize:vertical;}
 @media(max-width:767px){.frame-grid{grid-template-columns:1fr;}}

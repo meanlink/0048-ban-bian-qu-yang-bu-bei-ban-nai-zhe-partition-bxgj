@@ -29,6 +29,8 @@ out/
 coverage/
 *.pyc
 venv/
+.pytest_cache/
+*.rdb
 target/
 *.o
 *.obj

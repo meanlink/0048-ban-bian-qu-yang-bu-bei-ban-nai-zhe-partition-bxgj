@@ -22,3 +22,8 @@ class Exclusion(BaseModel):
 
 class Cut(BaseModel):
     width:int=Field(ge=10,le=1500)
+    request_key:str=Field(min_length=8,max_length=64,pattern=r"^[A-Za-z0-9_-]{8,64}$")
+    preview_token:str=Field(min_length=16,max_length=128)
+
+class Void(BaseModel):
+    reason:str=Field(min_length=5,max_length=240)

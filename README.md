@@ -18,11 +18,21 @@
 
 算法按区取有效卡的零位校正结果，分别计算中位数、相对中位数的绝对偏差中位数 MAD 以及 P90 的线性分位插值。两区至少各 3 个有效样片，所有已登记取样均须有有效卡。夹具过校期或厚度不适配的测量拒绝接纳；复测需先有排除说明。
 
+裁切单停用与复测换发规则：复核员可在签发页面写明原因停用旧裁切单，停用后批次解冻，操作员才能对原批次排除原卡并复测；停用时仍在排队的批签凭据立即作废，worker 出单前还会再次校验裁切单状态，裁切桌拿不到任何旧单。复测达标后才能换发：换发请求携带预览令牌，令牌是当时有效检测卡的 HMAC 指纹，若检测在签发前先被改动，旧预览发来的换发会被退回；同一 `request_key` 的换发重试只返回原单、不重复出单。停用单及其检测快照、批签凭据按签发当时的检测结果全部留档，可在签发页的留档表追溯。
+
 ```sh
 cp -n .env.example .env
 docker compose up -d --build --wait
 docker compose exec backend python -m scripts.seed_demo
 docker compose down -v --remove-orphans
+```
+
+后端测试使用独立的 `business_test` 数据库，先建库再运行（依赖见 `backend/requirements-dev.txt`）：
+
+```sh
+createdb -U app business_test
+DATABASE_URL=postgresql://app@/business_test JWT_SECRET=test-secret \
+  REDIS_URL=redis://localhost:6379/15 python -m pytest backend/tests
 ```
 
 三个演示账号为 operator@demo.local、reviewer@demo.local、viewer@demo.local，默认密码 Demo2026!。FRONTEND_PORT、BACKEND_PORT、DB_PORT 决定宿主端口，SEED_DEMO 控制自动填充，JWT_SECRET、DEMO_PASSWORD、POSTGRES_PASSWORD 可改为自己的配置。五服务使用 Nginx 原生 ES modules、FastAPI、Python worker、Redis 和 PostgreSQL。后端本地开发安装 backend/requirements.txt，配置 DATABASE_URL、REDIS_URL、JWT_SECRET，然后运行 `uvicorn app:app --reload` 和 `python worker.py`。backend/frame 为分区、夹具、检测与签单逻辑，frontend/caliper 为工台。角色和任务枚举在 backend/core.py 与 frontend/base.js；取样区与检测状态在 schema.sql、backend/frame/request.py、inspection.py 和 frontend/caliper/lexicon.js。MIT 许可证。

@@ -9,8 +9,14 @@ def look_up(cx,code,lock=False):
         raise HTTPException(404,"背板批号未找到")
     return row
 
+def active_order(cx,code,lock=False):
+    tail=" FOR UPDATE" if lock else ""
+    return cx.execute(
+        f"SELECT * FROM frame_cut_orders WHERE lot=%s AND status='active'{tail}",(code,)
+    ).fetchone()
+
 def writable(cx,code):
     row=look_up(cx,code,True)
-    if cx.execute("SELECT 1 FROM frame_cut_orders WHERE lot=%s",(code,)).fetchone():
-        raise HTTPException(409,"批次已签发边框裁切，检测留档已冻结")
+    if active_order(cx,row["code"]):
+        raise HTTPException(409,"批次已有有效裁切单，检测留档已冻结；如需复测请先停用旧单")
     return row
