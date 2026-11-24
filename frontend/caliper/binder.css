@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Instrument+Sans:wght@400;600&display=swap');
+:root{--s-page:oklch(94% .033 90);--s-panel:oklch(97% .023 84);--s-ink:oklch(29% .041 67);
+   --s-accent:oklch(44% .125 36);--s-line:oklch(72% .06 78);--s-muted:oklch(45% .057 66);
+   --s-display:"Bricolage Grotesque","Noto Serif SC",serif;--s-body:"Instrument Sans","Noto Sans SC",sans-serif;}
+.masthead{border-top:10px double var(--s-accent);}
+.frame-head{padding:1.1rem 0;border-bottom:1px solid var(--s-line);margin-bottom:1.2rem;}
+.frame-head p{margin:0;color:var(--s-muted);}
+.frame-grid{display:grid;grid-template-columns:minmax(0,3.45fr) minmax(230px,1fr);gap:1.3rem;}
+.frame-grid aside{align-self:start;background:var(--s-panel);padding:1.15rem;border-top:6px solid var(--s-accent);}
+.frame-grid form{display:grid;gap:.6rem;margin:.7rem 0;}
+.card-table{overflow:auto;}
+.card-table table{white-space:nowrap;}
+.card-table small,.jigs small{display:block;}
+.jigs{margin:1rem 0 0;}
+.jigs p{padding:.55rem 0;border-bottom:1px dotted var(--s-line);}
+@media(max-width:767px){.frame-grid{grid-template-columns:1fr;}}

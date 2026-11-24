@@ -1,0 +1,6 @@
+.plot-row{border-bottom:1px solid var(--s-line);padding:1rem 0;}
+.dot-axis{height:60px;position:relative;background:repeating-linear-gradient(to right,var(--s-line) 0 1px,transparent 1px 10%);border-block:1px solid var(--s-line);margin:.7rem 0;}
+.dot-axis .limit{position:absolute;inset-block:0;width:2px;background:var(--s-accent);}
+.dot-axis .point{display:block;position:absolute;width:10px;height:10px;border-radius:50%;background:var(--s-ink);transform:translateX(-50%);transition:transform .2s cubic-bezier(.15,.8,.3,1);}
+.dot-axis .point:hover{transform:translateX(-50%) scale(1.4);}
+.plot-row p{display:flex;flex-wrap:wrap;gap:1rem;margin:0;}
